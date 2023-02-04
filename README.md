@@ -5,8 +5,7 @@ This repository contains samples of Azure Managed Applications that can be used 
 
 ## Documentation
 
-
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fazure%2Fazure-managedapp-samples%2Fmaster%2FManaged%2520Application%2520Sample%2520Packages%2F201-deploy-with-terraform%2Fazuredeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/{https%3A%2F%2Fgithub.com%2Fvyshaghpoc%2Fdev-az-test%2Fblob%2Fmain%2Fazuredeploy.json})
 
 
 [Azure Managed Application overview](https://docs.microsoft.com/en-us/azure/azure-resource-manager/managed-application-overview)
