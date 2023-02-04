@@ -9,7 +9,7 @@ You have a Terraform template which you would like to use to deploy your managed
 
 Clicking on the button below, will create the Managed Application definition to a Resource Group in your Azure subscription.
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://raw.githubusercontent.com/vyshaghpoc/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-deploy-with-terraform/azuredeploy.json)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/vyshaghpoc/azure-managedapp-samples/master/Managed%20Application%20Sample%20Packages/201-deploy-with-terraform/azuredeploy.json)
 
 ### Deploy using PowerShell
 
