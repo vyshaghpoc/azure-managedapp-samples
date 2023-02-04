@@ -8,80 +8,63 @@ provider "azurerm" {
     skip_provider_registration = true
     features{}
 }
-
-# Create virtual network
-resource "azurerm_virtual_network" "network" {
-    name                = "${var.base_name}Vnet"
-    address_space       = ["10.0.0.0/16"]
-    location            = var.location
-    resource_group_name = var.resource_group_name
-
-    tags = {
-        environment = "${var.base_name} Managed App"
-    }
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "eastus"
 }
 
-# Create subnet
-resource "azurerm_subnet" "subnet" {
-    name                 = "${var.base_name}Subnet"
-    resource_group_name  = var.resource_group_name
-    virtual_network_name = azurerm_virtual_network.network.name
-    address_prefix       = "10.0.1.0/24"
+resource "azurerm_virtual_network" "example" {
+  name                = "example-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 }
 
-# Create public IPs
-resource "azurerm_public_ip" "publicip" {
-    name                         = "${var.base_name}IP"
-    location                     = var.location
-    resource_group_name          = var.resource_group_name
-    allocation_method            = "Dynamic"
 
-    tags = {
-        environment = "${var.base_name} Managed App"
-    }
+
+resource "azurerm_subnet" "example" {
+  count               = var.subnet_count
+  name                = "example-subnet-${count.index}"
+  virtual_network_name = azurerm_virtual_network.example.name
+  resource_group_name = azurerm_resource_group.example.name
+   address_prefixes    = [cidrsubnet(azurerm_virtual_network.example.address_space[0], 8, count.index + 1)]
 }
 
-# Create Network Security Group and rule
-resource "azurerm_network_security_group" "nsg" {
-    name                = "${var.base_name}Nsg"
-    location            = var.location
-    resource_group_name = var.resource_group_name
-    
-    security_rule {
-        name                       = "SSH"
-        priority                   = 1001
-        direction                  = "Inbound"
-        access                     = "Allow"
-        protocol                   = "Tcp"
-        source_port_range          = "*"
-        destination_port_range     = "22"
-        source_address_prefix      = "*"
-        destination_address_prefix = "*"
-    }
-
-    tags = {
-        environment = "${var.base_name} Managed App"
-    }
+data "azurerm_resource_group" "example" {
+  name = azurerm_resource_group.example.name
 }
 
-# Create network interface
-resource "azurerm_network_interface" "nic" {
-    name                      = "${var.base_name}Nic"
-    location                  = var.location
-    resource_group_name       = var.resource_group_name
-    #network_security_group_id = azurerm_network_security_group.nsg.id
-
-    ip_configuration {
-        name                          = "${var.base_name}NicConfiguration"
-        subnet_id                     = azurerm_subnet.subnet.id
-        private_ip_address_allocation = "Dynamic"
-        public_ip_address_id          = azurerm_public_ip.publicip.id
-    }
-
-    tags = {
-        environment = "${var.base_name} Managed App"
-    }
+variable "subnet_count" {
+  type = number
+  default = 3
 }
+
+resource "azurerm_route_table" "example" {
+  count               = var.subnet_count
+  name                = "example-route-table-${count.index + 1}"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+
+  route {
+    name                   = "example"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.0.3.4"
+  }
+}
+
+resource "azurerm_subnet_route_table_association" "example" {
+  count                    = var.subnet_count
+  subnet_id                = azurerm_subnet.example[count.index].id
+  route_table_id           = azurerm_route_table.example[count.index].id
+}
+
+
+/*
+data "azurerm_region" "example" {
+  name = data.azurerm_resource_group.example.location
+}*/
+
 
 # Create storage account for boot diagnostics
 resource "azurerm_storage_account" "diag" {
