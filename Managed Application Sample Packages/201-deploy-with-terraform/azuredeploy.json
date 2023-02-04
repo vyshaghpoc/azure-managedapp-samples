@@ -26,12 +26,7 @@
                 "description": "Specify the resource lock being used for the managed application"
             }
         },
-        "authorizations": {
-            "type": "string",
-            "metadata": {
-                "description": "Provide the authorization mapping for the managed application."
-            }
-        },
+       
         "description": {
             "type": "string",
             "defaultValue": "Managed Azure IaaS Web Application",
