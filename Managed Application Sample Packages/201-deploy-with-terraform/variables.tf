@@ -38,4 +38,7 @@ variable "resource_group_name" {
     default = ""
 }
 
-
+variable "subnet_count" {
+  type = number
+  default = 3
+}
