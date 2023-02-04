@@ -37,3 +37,8 @@ variable "resource_group_name" {
     type    = string
     default = ""
 }
+
+variable "subnet_count" {
+  type = number
+  default = 3
+}
