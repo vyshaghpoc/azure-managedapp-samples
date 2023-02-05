@@ -42,7 +42,7 @@
         }
     },
     "variables": {
-        "packageFileUri": "deploy-with-terraform.zip"
+        "packageFileUri": "./deploy-with-terraform.zip"
     },
     "resources": [
         {
