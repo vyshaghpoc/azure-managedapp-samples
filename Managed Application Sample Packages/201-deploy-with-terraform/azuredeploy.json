@@ -43,7 +43,7 @@
         }
     },
     "variables": {
-        "packageFileUri": "[uri(deployment().properties.templateLink.uri, 'deploy-with-terraform.zip')]"
+        "packageFileUri": "deploy-with-terraform.zip"
     },
     "resources": [
         {
