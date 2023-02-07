@@ -42,7 +42,7 @@
         }
     },
     "variables": {
-        "packageFileUri": "./deploy-with-terraform.zip"
+        "packageFileUri": "https://github.com/vyshaghpoc/azure-managedapp-samples/blob/master/Managed%20Application%20Sample%20Packages/201-deploy-with-terraform/deploy-with-terraform.zip"
     },
     "resources": [
         {
