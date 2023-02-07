@@ -10,12 +10,12 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
+  name     = "Vyshagh_Azure_test1_RG"
   location = "eastus"
 }
 
 resource "azurerm_virtual_network" "example" {
-  name                = "example-vnet"
+  name                = "Vyshagh-vnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
@@ -37,7 +37,7 @@ data "azurerm_resource_group" "example" {
 
 variable "subnet_count" {
   type = number
-  default = 3
+  default = 4
 }
 
 resource "azurerm_route_table" "example" {
